@@ -77,6 +77,25 @@ export async function stepSession(req: Request, res: Response): Promise<void> {
   }
 }
 
+export async function setSpeed(req: Request, res: Response): Promise<void> {
+  const session = sessionRepo.getSession(req.params.sessionId);
+  if (!session) {
+    res.status(404).json({ error: "Session not found" });
+    return;
+  }
+  const speed = req.body?.speed;
+  if (!speed) {
+    res.status(400).json({ error: "Missing speed parameter" });
+    return;
+  }
+  try {
+    const result = await mlClient.setSpeed({ speed: speed as any });
+    res.json(result);
+  } catch (err) {
+    res.status(502).json({ error: "Upstream ML API error", detail: err instanceof Error ? err.message : String(err) });
+  }
+}
+
 export function getSession(req: Request, res: Response): void {
   const session = sessionRepo.getSession(req.params.sessionId);
   if (!session) {

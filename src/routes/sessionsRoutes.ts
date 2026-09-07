@@ -12,3 +12,4 @@ sessionsRouter.post("/:sessionId/complete", sessionsController.completeSession);
 sessionsRouter.post("/:sessionId/step", sessionsController.stepSession);
 sessionsRouter.get("/:sessionId/metrics", sessionsController.getSessionMetrics);
 sessionsRouter.get("/:sessionId/history", sessionsController.getSessionHistory);
+sessionsRouter.post("/:sessionId/speed", sessionsController.setSpeed);
